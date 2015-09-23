@@ -8,9 +8,10 @@
 
 #import "ViewController.h"
 #import "Circle.h" 
+#import "Velocity.h"
 
 @interface ViewController ()
-
+@property (nonatomic) NSMutableSet *set;
 @end
 
 @implementation ViewController
@@ -18,15 +19,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.set = [NSMutableSet set];
     NSUInteger count = 5;
     // show circles
     for (uint i = 0; i < count; i++) {
-        [self.view addSubview:[Circle randomCircle]];
+        Circle *circle =         [Circle randomCircle];
+        [self.view addSubview:circle];
+        [self.set addObject:circle];
     }
     
-    // move circles
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
-
+- (void) moveCircles
+{
+    for (Circle *circle in self.set) {
+        circle.transform = CGAffineTransformTranslate(circle.transform, circle.v.vx, circle.v.vy);
+        NSLog(@"%@", NSStringFromCGRect(circle.frame));
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

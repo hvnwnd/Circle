@@ -25,7 +25,14 @@
     CGFloat centerX = [[self class] getRandomNumberBetween:size to:(1024-size)];
     CGFloat centerY = [[self class] getRandomNumberBetween:size to:(768-size)];
     
-    return [[self alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:[[Velocity alloc] initWithX:10 y:10] color:[UIColor greenColor]];
+    UIColor *color = [UIColor colorWithRed:[[self class] getRandomNumberBetween:0 to:255]/255.0
+                                     green:[[self class] getRandomNumberBetween:0 to:255]/255.0
+                                      blue:[[self class] getRandomNumberBetween:0 to:255]/255.0
+                                     alpha:0.8];
+    
+    float vx = [[self class] getRandomNumberBetween:1 to:10];
+    float vy = [[self class] getRandomNumberBetween:1 to:10];
+    return [[self alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:[[Velocity alloc] initWithX:vx y:vy] color:color];
 
 }
 
@@ -61,7 +68,21 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddEllipseInRect(ctx, rect);
     CGContextSetFillColor(ctx, CGColorGetComponents([self.color CGColor]));
+    
     CGContextFillPath(ctx);
+    
+    UIFont *font =[UIFont systemFontOfSize:16.0];
+    CGFloat fontHeight = font.pointSize;
+    CGFloat yOffset = (rect.size.height - fontHeight) / 2.0;
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.alignment                = NSTextAlignmentCenter;
+
+    NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.size];
+    [sizeString drawInRect:
+     CGRectMake(0, yOffset, rect.size.width, fontHeight)
+            withAttributes:@{NSFontAttributeName:font,
+                             NSForegroundColorAttributeName:[UIColor whiteColor],
+                             NSParagraphStyleAttributeName:paragraphStyle}];
 
 }
 
