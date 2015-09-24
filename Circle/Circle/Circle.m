@@ -101,7 +101,7 @@
 
 - (BOOL)bumpToWall
 {
-    return CGRectContainsRect(CanvasFrame, self.frame);
+    return !CGRectContainsRect(CanvasFrame, CGRectMake(self.center.x-self.size, self.center.y-self.size, 2*self.size, 2*self.size));
 }
 
 
@@ -133,6 +133,6 @@
 }
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"%p %d %f:%f", self, self.size, self.v.vx, self.v.vy];
+    return [NSString stringWithFormat:@"%p(%f %f) %d %f:%f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
 }
 @end
