@@ -32,7 +32,7 @@
                                      green:[[self class] getRandomNumberBetween:0 to:255]/255.0
                                       blue:[[self class] getRandomNumberBetween:0 to:255]/255.0
                                      alpha:0.8];
-    
+    // Fixme: - velocity
     float vx = [[self class] getRandomNumberBetween:CircleMinVelociy to:CircleMaxVelociy];
     float vy = [[self class] getRandomNumberBetween:CircleMinVelociy to:CircleMaxVelociy];
     
@@ -68,10 +68,10 @@
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle{
     // change velocity of each other
     
-    NSUInteger c1vx = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vx v2:circle.v.vx];
-    NSUInteger c2vx = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vx v2:self.v.vx];
-    NSUInteger c1vy = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vy v2:circle.v.vy];
-    NSUInteger c2vy = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vy v2:self.v.vy];
+    float c1vx = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vx v2:circle.v.vx];
+    float c2vx = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vx v2:self.v.vx];
+    float c1vy = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vy v2:circle.v.vy];
+    float c2vy = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vy v2:self.v.vy];
     
     self.v.vx = c1vx;
     self.v.vy = c1vy;
@@ -79,11 +79,11 @@
     circle.v.vy = c2vy;
 }
 
-- (NSUInteger)bumpedVelocityWithM1:(NSUInteger)m1
+- (float)bumpedVelocityWithM1:(NSUInteger)m1
                                 m2:(NSUInteger)m2
-                                v1:(NSUInteger)v1
-                                v2:(NSUInteger)v2{
-    return ((m1-m2)*v1+2*m2*v2)/(m1+m2);
+                                v1:(float)v1
+                                v2:(float)v2{
+    return ((NSInteger)(m1-m2)*v1+2*m2*v2)/(float)(m1+m2);
 }
 
 - (void)move
@@ -132,5 +132,7 @@
     return (int)from + arc4random() % (to-from+1);
 }
 
-
+- (NSString *)description{
+    return [NSString stringWithFormat:@"%p %d %f:%f", self, self.size, self.v.vx, self.v.vy];
+}
 @end

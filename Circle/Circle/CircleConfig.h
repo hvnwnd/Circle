@@ -9,6 +9,8 @@
 #ifndef CircleConfig_h
 #define CircleConfig_h
 
+#define CircleCount         5
+
 #define CircleMoveInterval 0.02
 #define CircleMinSize       20
 #define CircleMaxSize       100

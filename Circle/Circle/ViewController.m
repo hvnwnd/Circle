@@ -21,7 +21,7 @@
     [super viewDidLoad];
 
     self.set = [NSMutableSet set];
-    NSUInteger count = 5;
+    NSUInteger count = CircleCount;
     // show circles
     for (uint i = 0; i < count; i++) {
         Circle *circle =         [Circle randomCircle];
@@ -35,14 +35,14 @@
 {
     for (Circle *circle in self.set) {
         [circle move];
-//        NSMutableSet *otherCircles = [self.set mutableCopy];
-//        [otherCircles removeObject:circle];
-//        
-//        for (Circle *anotherCircle in otherCircles) {
-//            if ([circle shouldBumpToCircle:anotherCircle]){
-//                [circle changeVelocityAfterBumpToCircle:anotherCircle];
-//            }
-//        }
+        NSMutableSet *otherCircles = [self.set mutableCopy];
+        [otherCircles removeObject:circle];
+        
+        for (Circle *anotherCircle in otherCircles) {
+            if ([circle shouldBumpToCircle:anotherCircle]){
+                [circle changeVelocityAfterBumpToCircle:anotherCircle];
+            }
+        }
     }
 }
 - (void)didReceiveMemoryWarning {
