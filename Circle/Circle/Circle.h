@@ -2,28 +2,31 @@
 //  Circle.h
 //  Circle
 //
-//  Created by Titi on 9/23/15.
+//  Created by Titi on 9/24/15.
 //  Copyright © 2015 Fantestech. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+@import CoreGraphics;
 
 @class Velocity;
-@interface Circle : UIView
+@interface Circle : NSObject
 
 @property (nonatomic) NSUInteger size;
 @property (nonatomic) Velocity *v;
-@property (nonatomic) UIColor *color;
-@property (nonatomic, readonly) CGRect frame;
+@property (nonatomic) CGPoint center;
+
+
+-(instancetype)initWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v;
++ (instancetype)randomCircle;
 
 - (Circle *)compineWithCircle:(Circle *)aCircle;
-
-+(Circle *)circleWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v color:(UIColor *)color;
-+(Circle *)randomCircle;
 
 - (BOOL)shouldBumpToCircle:(Circle *)circle;
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle;
 
 - (BOOL)bumpToWall;
 - (void)move;
+
 @end

@@ -23,11 +23,6 @@
     return self;
 }
 
-//- (float)direction
-//{
-//    return
-//}
-
 - (void)bumpToUpOrBottomWall
 {
     _vy = -_vy;

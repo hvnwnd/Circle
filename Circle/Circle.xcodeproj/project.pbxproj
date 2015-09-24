@@ -13,8 +13,10 @@
 		1812168D1BB3311700D20B7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1812168B1BB3311700D20B7E /* Main.storyboard */; };
 		1812168F1BB3311700D20B7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1812168E1BB3311700D20B7E /* Assets.xcassets */; };
 		181216921BB3311700D20B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 181216901BB3311700D20B7E /* LaunchScreen.storyboard */; };
-		1812169B1BB3319500D20B7E /* Circle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812169A1BB3319500D20B7E /* Circle.m */; settings = {ASSET_TAGS = (); }; };
+		1812169B1BB3319500D20B7E /* CircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812169A1BB3319500D20B7E /* CircleView.m */; settings = {ASSET_TAGS = (); }; };
 		1812169E1BB334E200D20B7E /* Velocity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812169D1BB334E200D20B7E /* Velocity.m */; settings = {ASSET_TAGS = (); }; };
+		18575BF61BB48F2100DF9E75 /* Circle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18575BF51BB48F2100DF9E75 /* Circle.m */; settings = {ASSET_TAGS = (); }; };
+		18575BF91BB49A9700DF9E75 /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18575BF81BB49A9700DF9E75 /* GameController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,10 +30,14 @@
 		1812168E1BB3311700D20B7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		181216911BB3311700D20B7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		181216931BB3311700D20B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		181216991BB3319500D20B7E /* Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
-		1812169A1BB3319500D20B7E /* Circle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle.m; sourceTree = "<group>"; };
+		181216991BB3319500D20B7E /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
+		1812169A1BB3319500D20B7E /* CircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleView.m; sourceTree = "<group>"; };
 		1812169C1BB334E200D20B7E /* Velocity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Velocity.h; sourceTree = "<group>"; };
 		1812169D1BB334E200D20B7E /* Velocity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Velocity.m; sourceTree = "<group>"; };
+		18575BF41BB48F2100DF9E75 /* Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
+		18575BF51BB48F2100DF9E75 /* Circle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle.m; sourceTree = "<group>"; };
+		18575BF71BB49A9700DF9E75 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		18575BF81BB49A9700DF9E75 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +71,8 @@
 		181216811BB3311700D20B7E /* Circle */ = {
 			isa = PBXGroup;
 			children = (
+				18575BF31BB48F0100DF9E75 /* Model */,
+				18575BF21BB48E9300DF9E75 /* CircleView */,
 				181216851BB3311700D20B7E /* AppDelegate.h */,
 				181216861BB3311700D20B7E /* AppDelegate.m */,
 				181216881BB3311700D20B7E /* ViewController.h */,
@@ -74,11 +82,9 @@
 				181216901BB3311700D20B7E /* LaunchScreen.storyboard */,
 				181216931BB3311700D20B7E /* Info.plist */,
 				181216821BB3311700D20B7E /* Supporting Files */,
-				181216991BB3319500D20B7E /* Circle.h */,
-				1812169A1BB3319500D20B7E /* Circle.m */,
-				1812169C1BB334E200D20B7E /* Velocity.h */,
-				1812169D1BB334E200D20B7E /* Velocity.m */,
 				74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */,
+				18575BF71BB49A9700DF9E75 /* GameController.h */,
+				18575BF81BB49A9700DF9E75 /* GameController.m */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
@@ -89,6 +95,26 @@
 				181216831BB3311700D20B7E /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18575BF21BB48E9300DF9E75 /* CircleView */ = {
+			isa = PBXGroup;
+			children = (
+				181216991BB3319500D20B7E /* CircleView.h */,
+				1812169A1BB3319500D20B7E /* CircleView.m */,
+			);
+			name = CircleView;
+			sourceTree = "<group>";
+		};
+		18575BF31BB48F0100DF9E75 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18575BF41BB48F2100DF9E75 /* Circle.h */,
+				18575BF51BB48F2100DF9E75 /* Circle.m */,
+				1812169C1BB334E200D20B7E /* Velocity.h */,
+				1812169D1BB334E200D20B7E /* Velocity.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,8 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1812168A1BB3311700D20B7E /* ViewController.m in Sources */,
-				1812169B1BB3319500D20B7E /* Circle.m in Sources */,
+				1812169B1BB3319500D20B7E /* CircleView.m in Sources */,
 				1812169E1BB334E200D20B7E /* Velocity.m in Sources */,
+				18575BF61BB48F2100DF9E75 /* Circle.m in Sources */,
+				18575BF91BB49A9700DF9E75 /* GameController.m in Sources */,
 				181216871BB3311700D20B7E /* AppDelegate.m in Sources */,
 				181216841BB3311700D20B7E /* main.m in Sources */,
 			);

@@ -19,4 +19,8 @@
 #define CircleMinVelociy    1
 #define CircleMaxVelociy    10
 
+#define CanvasFrame CGRectMake(0, 0, 1024, 768)
+
+#define RandomBetween(from,to) ((int)from + arc4random() % (to-from+1))
+
 #endif /* CircleConfig_h */

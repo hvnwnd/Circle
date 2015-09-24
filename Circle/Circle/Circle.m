@@ -2,60 +2,54 @@
 //  Circle.m
 //  Circle
 //
-//  Created by Titi on 9/23/15.
+//  Created by Titi on 9/24/15.
 //  Copyright © 2015 Fantestech. All rights reserved.
 //
 
 #import "Circle.h"
-#import "Velocity.h"
 #import "CircleConfig.h"
-
-#define CanvasFrame CGRectMake(0, 0, 1024, 768)
-
-@import CoreGraphics;
+#import "Velocity.h"
 
 @implementation Circle
 
-+(Circle *)circleWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v color:(UIColor *)color
++ (instancetype)randomCircle
 {
-    return [[self alloc] initWithCenter:center size:size velocity:v color:color];
-}
+    NSUInteger size = RandomBetween(CircleMinSize, CircleMaxSize);
+    CGFloat centerX = RandomBetween(size, (1024-size));
+    CGFloat centerY = RandomBetween(size, (768-size));
 
-+(Circle *)randomCircle
-{
-    NSUInteger size = [[self class] getRandomNumberBetween:CircleMinSize to:CircleMaxSize];
-    
-    CGFloat centerX = [[self class] getRandomNumberBetween:size to:(1024-size)];
-    CGFloat centerY = [[self class] getRandomNumberBetween:size to:(768-size)];
-    
-    UIColor *color = [UIColor colorWithRed:[[self class] getRandomNumberBetween:0 to:255]/255.0
-                                     green:[[self class] getRandomNumberBetween:0 to:255]/255.0
-                                      blue:[[self class] getRandomNumberBetween:0 to:255]/255.0
-                                     alpha:0.8];
     // Fixme: - velocity
-    float vx = [[self class] getRandomNumberBetween:CircleMinVelociy to:CircleMaxVelociy];
-    float vy = [[self class] getRandomNumberBetween:CircleMinVelociy to:CircleMaxVelociy];
-    
-    return [[self alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:[[Velocity alloc] initWithX:vx y:vy] color:color];
+    float vx = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
+    float signedVx = vx*(arc4random()%2? 1:-1);
+    float vy = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
+    float signedVy = vy*(arc4random()%2? 1:-1);
 
+    Velocity *v = [[Velocity alloc] initWithX:signedVx y:signedVy];
+    return [[Circle alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:v];
 }
 
--(instancetype)initWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v color:(UIColor *)color
++(Circle *)circleWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v
 {
-    self = [super initWithFrame:CGRectMake((CGFloat)center.x-size, (CGFloat)center.y-size, (CGFloat)size*2,(CGFloat) size*2)];
+    return [[self alloc] initWithCenter:center size:size velocity:v];
+}
+
+-(instancetype)initWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v
+{
+    self = [super init];
     
     if (self){
+        _center = center;
         _size = size;
         _v = v;
-        _color = color;
-        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
+#pragma mark Private
+
 - (Circle *)compineWithCircle:(Circle *)aCircle
 {
-    return [Circle circleWithCenter:aCircle.center size:aCircle.size+self.size velocity:aCircle.v color:aCircle.color];
+    return [Circle circleWithCenter:aCircle.center size:aCircle.size+self.size velocity:aCircle.v];
 }
 
 
@@ -80,9 +74,9 @@
 }
 
 - (float)bumpedVelocityWithM1:(NSUInteger)m1
-                                m2:(NSUInteger)m2
-                                v1:(float)v1
-                                v2:(float)v2{
+                           m2:(NSUInteger)m2
+                           v1:(float)v1
+                           v2:(float)v2{
     return ((NSInteger)(m1-m2)*v1+2*m2*v2)/(float)(m1+m2);
 }
 
@@ -104,35 +98,11 @@
     return !CGRectContainsRect(CanvasFrame, CGRectMake(self.center.x-self.size, self.center.y-self.size, 2*self.size, 2*self.size));
 }
 
-
-- (void)drawRect:(CGRect)rect {
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextAddEllipseInRect(ctx, rect);
-    CGContextSetFillColor(ctx, CGColorGetComponents([self.color CGColor]));
-    
-    CGContextFillPath(ctx);
-    
-    UIFont *font =[UIFont systemFontOfSize:16.0];
-    CGFloat fontHeight = font.pointSize;
-    CGFloat yOffset = (rect.size.height - fontHeight) / 2.0;
-    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
-    paragraphStyle.alignment                = NSTextAlignmentCenter;
-
-    NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.size];
-    [sizeString drawInRect:
-     CGRectMake(0, yOffset, rect.size.width, fontHeight)
-            withAttributes:@{NSFontAttributeName:font,
-                             NSForegroundColorAttributeName:[UIColor whiteColor],
-                             NSParagraphStyleAttributeName:paragraphStyle}];
-
-}
-
-+(int)getRandomNumberBetween:(NSUInteger)from to:(NSUInteger)to {
-    
-    return (int)from + arc4random() % (to-from+1);
-}
+#pragma mark Description
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"%p(%f %f) %d %f:%f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
+    return [NSString stringWithFormat:@"%p (%0.f %0.f) %d %0.f:%0.f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
 }
+
+
 @end
