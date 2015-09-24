@@ -32,6 +32,7 @@
 		1812169A1BB3319500D20B7E /* Circle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle.m; sourceTree = "<group>"; };
 		1812169C1BB334E200D20B7E /* Velocity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Velocity.h; sourceTree = "<group>"; };
 		1812169D1BB334E200D20B7E /* Velocity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Velocity.m; sourceTree = "<group>"; };
+		74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 				1812169A1BB3319500D20B7E /* Circle.m */,
 				1812169C1BB334E200D20B7E /* Velocity.h */,
 				1812169D1BB334E200D20B7E /* Velocity.m */,
+				74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
@@ -312,6 +314,7 @@
 				181216981BB3311700D20B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

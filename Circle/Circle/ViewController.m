@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Circle.h" 
 #import "Velocity.h"
+#import "CircleConfig.h"
 
 @interface ViewController ()
 @property (nonatomic) NSMutableSet *set;
@@ -28,13 +29,20 @@
         [self.set addObject:circle];
     }
     
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 - (void) moveCircles
 {
     for (Circle *circle in self.set) {
-        circle.transform = CGAffineTransformTranslate(circle.transform, circle.v.vx, circle.v.vy);
-        NSLog(@"%@", NSStringFromCGRect(circle.frame));
+        [circle move];
+//        NSMutableSet *otherCircles = [self.set mutableCopy];
+//        [otherCircles removeObject:circle];
+//        
+//        for (Circle *anotherCircle in otherCircles) {
+//            if ([circle shouldBumpToCircle:anotherCircle]){
+//                [circle changeVelocityAfterBumpToCircle:anotherCircle];
+//            }
+//        }
     }
 }
 - (void)didReceiveMemoryWarning {
