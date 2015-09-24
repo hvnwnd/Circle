@@ -25,7 +25,7 @@
     float vy = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
     float signedVy = vy*(arc4random()%2? 1:-1);
 
-    Velocity *v = [[Velocity alloc] initWithX:0 y:0];
+    Velocity *v = [[Velocity alloc] initWithX:signedVx y:signedVy];
     return [[Circle alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:v];
 }
 
