@@ -12,9 +12,6 @@
 
 @interface CircleView : UIView
 
-@property (nonatomic) NSUInteger size;
-@property (nonatomic) Velocity *v;
-
 @property (nonatomic) UIColor *color;
 @property (nonatomic) Circle *circle;
 

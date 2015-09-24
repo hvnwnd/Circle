@@ -14,7 +14,9 @@
 @property (nonatomic) float vy;
 
 - (instancetype)initWithX:(float)x y:(float)y;
-- (void)bumpToUpOrBottomWall;
-- (void)bumpToLeftOrRightWall;
+- (void)bumpToTopWall;
+- (void)bumpToBottomWall;
+- (void)bumpToLeftWall;
+- (void)bumpToRightWall;
 
 @end

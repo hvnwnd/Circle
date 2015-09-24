@@ -13,12 +13,12 @@
 @class Velocity;
 @interface Circle : NSObject
 
-@property (nonatomic) NSUInteger size;
+@property (nonatomic) CGFloat size;
 @property (nonatomic) Velocity *v;
 @property (nonatomic) CGPoint center;
 
 
--(instancetype)initWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v;
+-(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v;
 + (instancetype)randomCircle;
 
 - (Circle *)compineWithCircle:(Circle *)aCircle;

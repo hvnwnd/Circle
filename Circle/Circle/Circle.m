@@ -15,6 +15,7 @@
 + (instancetype)randomCircle
 {
     NSUInteger size = RandomBetween(CircleMinSize, CircleMaxSize);
+    float sizef = 1.0*size;
     CGFloat centerX = RandomBetween(size, (1024-size));
     CGFloat centerY = RandomBetween(size, (768-size));
 
@@ -24,16 +25,16 @@
     float vy = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
     float signedVy = vy*(arc4random()%2? 1:-1);
 
-    Velocity *v = [[Velocity alloc] initWithX:signedVx y:signedVy];
+    Velocity *v = [[Velocity alloc] initWithX:0 y:0];
     return [[Circle alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:v];
 }
 
-+(Circle *)circleWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v
++(Circle *)circleWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v
 {
     return [[self alloc] initWithCenter:center size:size velocity:v];
 }
 
--(instancetype)initWithCenter:(CGPoint)center size:(NSUInteger)size velocity:(Velocity *)v
+-(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v
 {
     self = [super init];
     
@@ -55,8 +56,8 @@
 
 - (BOOL)shouldBumpToCircle:(Circle *)circle{
     double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
-    
-    return distance <= (self.size+circle.size);
+    BOOL result = (distance <= (self.size+circle.size));
+    return result;
 }
 
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle{
@@ -73,8 +74,8 @@
     circle.v.vy = c2vy;
 }
 
-- (float)bumpedVelocityWithM1:(NSUInteger)m1
-                           m2:(NSUInteger)m2
+- (float)bumpedVelocityWithM1:(float)m1
+                           m2:(float)m2
                            v1:(float)v1
                            v2:(float)v2{
     return ((NSInteger)(m1-m2)*v1+2*m2*v2)/(float)(m1+m2);
@@ -84,11 +85,18 @@
 {
     self.center = CGPointMake(self.center.x+self.v.vx, self.center.y+self.v.vy);
     if ([self bumpToWall]){
-        if ((self.center.x-self.size) <= 0 || self.center.x+self.size >= 1024){
-            [self.v bumpToLeftOrRightWall];
+        if ((self.center.x-self.size) <= 0){
+            [self.v bumpToLeftWall];
         }
-        if (self.center.y-self.size <= 0 || self.center.y+self.size >= 768){
-            [self.v bumpToUpOrBottomWall];
+        if (self.center.x+self.size >= 1024)
+        {
+            [self.v bumpToRightWall];
+        }
+        if (self.center.y-self.size <= 0){
+            [self.v bumpToBottomWall];
+        }
+        if (self.center.y+self.size >= 768){
+            [self.v bumpToTopWall];
         }
     }
 }
@@ -101,7 +109,7 @@
 #pragma mark Description
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"%p (%0.f %0.f) %d %0.f:%0.f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
+    return [NSString stringWithFormat:@"%p (%0.f %0.f) %f %0.f:%0.f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
 }
 
 

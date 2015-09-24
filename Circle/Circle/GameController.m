@@ -32,11 +32,30 @@
     {
         _randomCircles = [NSMutableSet setWithCapacity:CircleCount];
 
-        NSUInteger count = CircleCount;
         // show circles
-        for (uint i = 0; i < count; i++) {
-            Circle *circle =         [Circle randomCircle];
-            [_randomCircles addObject:circle];
+        while (_randomCircles.count < CircleCount){
+            Circle *circle =  [Circle randomCircle];
+            
+            NSSet *firstCircles = [_randomCircles copy];
+            if (_randomCircles.count > 0)
+            {
+                BOOL shouldAddCircle = YES;
+                for (Circle *anEarlierCircle in firstCircles) {
+                    shouldAddCircle = shouldAddCircle && ![circle shouldBumpToCircle:anEarlierCircle];
+                    if (!shouldAddCircle)
+                    {
+                        continue;
+                    }
+                }
+                
+                if (shouldAddCircle)
+                {
+                    [_randomCircles addObject:circle];
+                }
+            }else{
+                [_randomCircles addObject:circle];
+            }
+
         }
     }
     
@@ -47,7 +66,7 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
-- (void) moveCircles
+- (void)moveCircles
 {
     for (Circle *circle in self.randomCircles) {
         [circle move];

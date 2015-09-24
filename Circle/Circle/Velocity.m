@@ -23,14 +23,23 @@
     return self;
 }
 
-- (void)bumpToUpOrBottomWall
+- (void)bumpToTopWall
 {
-    _vy = -_vy;
+    _vy = -fabsf(_vy);
 }
 
-- (void)bumpToLeftOrRightWall
+- (void)bumpToBottomWall
 {
-    _vx = -_vx;
+    _vy = fabsf(_vy);
+}
+
+- (void)bumpToLeftWall
+{
+    _vx = fabsf(_vx);
+}
+- (void)bumpToRightWall
+{
+    _vx = -fabsf(_vx);
 }
 
 @end
