@@ -23,7 +23,7 @@
     GameController *controller = [GameController new];
     // show circles
     
-    for (Circle *circle in controller.randomCircles) {
+    for (Circle *circle in controller.circles) {
         CircleView *circleView = [CircleView randomColorCircleViewWithCircle:circle];
         [self.view addSubview:circleView];
     }

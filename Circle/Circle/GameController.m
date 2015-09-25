@@ -9,10 +9,12 @@
 #import "GameController.h"
 #import "CircleConfig.h"
 #import "Circle.h"
+#import "Velocity.h"
 
 @interface GameController ()
 
-@property (nonatomic, readwrite) NSMutableSet *randomCircles;
+@property (nonatomic) NSMutableSet *randomCircles;
+@property (nonatomic) NSSet *sampleCircles;
 @property (nonatomic) NSTimer *timer;
 @end
 
@@ -24,6 +26,16 @@
     if (self) {
     }
     return self;
+}
+
+- (NSSet *)sampleCircles
+{
+    if (!_sampleCircles){
+        Circle *circle1= [[Circle alloc] initWithCenter:CGPointMake(200, 300) size:50 velocity:[[Velocity alloc] initWithX:15 y:0]];
+        Circle *circle2 = [[Circle alloc] initWithCenter:CGPointMake(580, 290) size:200 velocity:[[Velocity alloc] initWithX:5 y:0]];
+        _sampleCircles = [NSSet setWithObjects:circle1, circle2, nil];
+    }
+    return _sampleCircles;
 }
 
 - (NSSet *)randomCircles
@@ -41,7 +53,7 @@
             {
                 BOOL shouldAddCircle = YES;
                 for (Circle *anEarlierCircle in firstCircles) {
-                    shouldAddCircle = shouldAddCircle && ![circle shouldBumpToCircle:anEarlierCircle];
+                    shouldAddCircle = shouldAddCircle && ![circle shouldBounceOffCircle:anEarlierCircle];
                     if (!shouldAddCircle)
                     {
                         continue;
@@ -66,15 +78,21 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
+- (NSSet *)circles{
+    return self.randomCircles;
+}
+
 - (void)moveCircles
 {
-    for (Circle *circle in self.randomCircles) {
+    
+    NSMutableSet *otherCircles = [self.circles mutableCopy];
+
+    for (Circle *circle in self.circles) {
         [circle move];
-        NSMutableSet *otherCircles = [self.randomCircles mutableCopy];
         [otherCircles removeObject:circle];
         
         for (Circle *anotherCircle in otherCircles) {
-            if ([circle shouldBumpToCircle:anotherCircle]){
+            if ([circle shouldBounceOffCircle:anotherCircle]){
                 [circle changeVelocityAfterBumpToCircle:anotherCircle];
             }
         }

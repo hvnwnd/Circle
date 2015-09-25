@@ -10,8 +10,7 @@
 
 @interface GameController : NSObject
 
-@property (nonatomic, readonly) NSMutableSet *randomCircles;
-
+@property (nonatomic) NSSet *circles;
 - (void)startGame;
 - (void)stopGame;
 

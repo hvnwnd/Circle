@@ -54,9 +54,12 @@
 }
 
 
-- (BOOL)shouldBumpToCircle:(Circle *)circle{
+- (BOOL)shouldBounceOffCircle:(Circle *)circle{
     double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
     BOOL result = (distance <= (self.size+circle.size));
+    if (result){
+        NSLog(@"toto");
+    }
     return result;
 }
 

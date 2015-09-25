@@ -23,7 +23,7 @@
 
 - (Circle *)compineWithCircle:(Circle *)aCircle;
 
-- (BOOL)shouldBumpToCircle:(Circle *)circle;
+- (BOOL)shouldBounceOffCircle:(Circle *)circle;
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle;
 
 - (BOOL)bumpToWall;
