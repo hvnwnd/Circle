@@ -14,6 +14,8 @@
 @property (nonatomic) float vy;
 
 - (instancetype)initWithX:(float)x y:(float)y;
+- (float)angle;
+- (float)absoluteVelocity;
 - (void)bumpToTopWall;
 - (void)bumpToBottomWall;
 - (void)bumpToLeftWall;

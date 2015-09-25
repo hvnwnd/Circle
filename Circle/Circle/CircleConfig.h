@@ -17,7 +17,7 @@
 
 // pixel unit
 #define CircleMinVelociy    1
-#define CircleMaxVelociy    10
+#define CircleMaxVelociy    5
 
 #define CanvasFrame CGRectMake(0, 0, 1024, 768)
 

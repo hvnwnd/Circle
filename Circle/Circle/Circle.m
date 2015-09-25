@@ -57,19 +57,17 @@
 - (BOOL)shouldBounceOffCircle:(Circle *)circle{
     double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
     BOOL result = (distance <= (self.size+circle.size));
-    if (result){
-        NSLog(@"toto");
-    }
+
     return result;
 }
 
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle{
-    // change velocity of each other
     
-    float c1vx = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vx v2:circle.v.vx];
-    float c2vx = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vx v2:self.v.vx];
-    float c1vy = [self bumpedVelocityWithM1:self.size m2:circle.size v1:self.v.vy v2:circle.v.vy];
-    float c2vy = [self bumpedVelocityWithM1:circle.size m2:self.size v1:circle.v.vy v2:self.v.vy];
+    float contactAngle = [self contactAngleWithCircle:circle];
+    float c1vx = [self bouncedVelocityAtXAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
+    float c2vx = [self bouncedVelocityAtXAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
+    float c1vy = [self bouncedVelocityAtYAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
+    float c2vy = [self bouncedVelocityAtYAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
     
     self.v.vx = c1vx;
     self.v.vy = c1vy;
@@ -77,13 +75,29 @@
     circle.v.vy = c2vy;
 }
 
-- (float)bumpedVelocityWithM1:(float)m1
-                           m2:(float)m2
-                           v1:(float)v1
-                           v2:(float)v2{
-    return ((NSInteger)(m1-m2)*v1+2*m2*v2)/(float)(m1+m2);
+- (float)contactAngleWithCircle:(Circle *)aCircle
+{
+    return atan2f((aCircle.center.y - self.center.y), (aCircle.center.x - self.center.x));
 }
 
+- (float)bouncedVelocityAtXAxisWithM1:(float)m1
+                           m2:(float)m2
+                           v1:(Velocity *)v1
+                           v2:(Velocity *)v2
+                         contactAngle:(float)contactAngle{
+    return (v1.absoluteVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.absoluteVelocity*cosf(v2.angle-contactAngle))*cosf(contactAngle)/(m1+m2)
+    +v1.absoluteVelocity*sinf(v1.angle-contactAngle)*cosf(contactAngle+M_PI/2);
+}
+
+- (float)bouncedVelocityAtYAxisWithM1:(float)m1
+                                   m2:(float)m2
+                                   v1:(Velocity *)v1
+                                   v2:(Velocity *)v2
+                         contactAngle:(float)contactAngle{
+    return (v1.absoluteVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.absoluteVelocity*cosf(v2.angle-contactAngle))*sinf(contactAngle)/(m1+m2)
+    +v1.absoluteVelocity*sinf(v1.angle-contactAngle)*sinf(contactAngle+M_PI_2);
+
+}
 - (void)move
 {
     self.center = CGPointMake(self.center.x+self.v.vx, self.center.y+self.v.vy);

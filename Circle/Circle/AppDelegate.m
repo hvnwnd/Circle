@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <Math.h>
 @interface AppDelegate ()
 
 @end
@@ -16,10 +16,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    CGRect frame1 = CGRectMake(0, 0, 1024, 768);
-    CGRect frame2 = CGRectMake(0, -1, 200, 100);
-    NSLog(@"%d", CGRectContainsRect(frame1, frame2));
-    
     return YES;
 }
 

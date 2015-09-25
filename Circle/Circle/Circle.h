@@ -21,6 +21,7 @@
 -(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v;
 + (instancetype)randomCircle;
 
+- (float)contactAngleWithCircle:(Circle *)aCircle;
 - (Circle *)compineWithCircle:(Circle *)aCircle;
 
 - (BOOL)shouldBounceOffCircle:(Circle *)circle;

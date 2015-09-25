@@ -52,7 +52,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"circle.center"]) {
-        self.center = self.circle.center;
+        self.center = CGPointMake(self.circle.center.x, 768 - self.circle.center.y) ;
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }

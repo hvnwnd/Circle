@@ -23,6 +23,14 @@
     return self;
 }
 
+- (float)angle{
+    return atan2f(_vy, _vx);
+}
+
+- (float)absoluteVelocity{
+    return sqrtf(_vy*_vy+_vx*_vx);
+}
+
 - (void)bumpToTopWall
 {
     _vy = -fabsf(_vy);

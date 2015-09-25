@@ -31,8 +31,8 @@
 - (NSSet *)sampleCircles
 {
     if (!_sampleCircles){
-        Circle *circle1= [[Circle alloc] initWithCenter:CGPointMake(200, 300) size:50 velocity:[[Velocity alloc] initWithX:15 y:0]];
-        Circle *circle2 = [[Circle alloc] initWithCenter:CGPointMake(580, 290) size:200 velocity:[[Velocity alloc] initWithX:5 y:0]];
+        Circle *circle1= [[Circle alloc] initWithCenter:CGPointMake(200, 300) size:50 velocity:[[Velocity alloc] initWithX:2 y:0]];
+        Circle *circle2 = [[Circle alloc] initWithCenter:CGPointMake(580, 250) size:80 velocity:[[Velocity alloc] initWithX:-3 y:0]];
         _sampleCircles = [NSSet setWithObjects:circle1, circle2, nil];
     }
     return _sampleCircles;
