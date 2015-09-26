@@ -17,12 +17,13 @@
 @property (nonatomic) Velocity *v;
 @property (nonatomic) CGPoint center;
 
+@property (nonatomic) BOOL isLifted;
 
 -(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v;
 + (instancetype)randomCircle;
 
 - (float)contactAngleWithCircle:(Circle *)aCircle;
-- (Circle *)compineWithCircle:(Circle *)aCircle;
+- (Circle *)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated;
 
 - (BOOL)shouldBounceOffCircle:(Circle *)circle;
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle;

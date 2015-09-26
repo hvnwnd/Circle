@@ -11,6 +11,7 @@
 #import "Velocity.h"
 #import "CircleConfig.h"
 #import "GameController.h"
+#import "Canvas.h"
 
 @interface ViewController ()
 @end
@@ -21,6 +22,8 @@
     [super viewDidLoad];
 
     GameController *controller = [GameController new];
+    Canvas *canvas = (Canvas *) self.view;
+    canvas.controller = controller;
     // show circles
     
     for (Circle *circle in controller.circles) {

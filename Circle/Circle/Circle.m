@@ -42,13 +42,32 @@
         _center = center;
         _size = size;
         _v = v;
+        
+        [self addObserver:self forKeyPath:@"isLifted" options:NSKeyValueObservingOptionInitial |NSKeyValueObservingOptionNew context:NULL];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"isLifted"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"isLifted"]) {
+        if (self.isLifted){
+            self.v = [Velocity new];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+
 #pragma mark Private
 
-- (Circle *)compineWithCircle:(Circle *)aCircle
+- (Circle *)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated
 {
     return [Circle circleWithCenter:aCircle.center size:aCircle.size+self.size velocity:aCircle.v];
 }

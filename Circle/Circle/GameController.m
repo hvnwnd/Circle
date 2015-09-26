@@ -24,6 +24,7 @@
 {
     self = [super init];
     if (self) {
+        self.circles = self.randomCircles;
     }
     return self;
 }
@@ -78,10 +79,6 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
-- (NSSet *)circles{
-    return self.randomCircles;
-}
-
 - (void)moveCircles
 {
     
@@ -103,4 +100,21 @@
     [self.timer invalidate];
     self.timer = nil;
 }
+
+- (void)liftCircle:(Circle *)circle{
+    NSMutableSet *set = [self.circles mutableCopy];
+    [set removeObject:circle];
+    self.circles = set;
+}
+
+- (void)dropCircle:(Circle *)smallCircle {/*inCircle:(Circle *)bigCircle{*/
+//    if (bigCircle == nil){
+        NSMutableSet *set = [self.circles mutableCopy];
+        [set addObject:smallCircle];
+        self.circles = set;
+//    }else{
+//        [bigCircle combineWithCircle:smallCircle animated:YES];
+//    }
+}
+
 @end

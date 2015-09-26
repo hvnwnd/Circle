@@ -71,13 +71,14 @@
     NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
     paragraphStyle.alignment                = NSTextAlignmentCenter;
 
-//    NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.circle.size];
-//    [sizeString drawInRect:
-//     CGRectMake(0, yOffset, rect.size.width, fontHeight)
-//            withAttributes:@{NSFontAttributeName:font,
-//                             NSForegroundColorAttributeName:[UIColor whiteColor],
-//                             NSParagraphStyleAttributeName:paragraphStyle}];
+    NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.circle.size];
+    [sizeString drawInRect:
+     CGRectMake(0, yOffset, rect.size.width, fontHeight)
+            withAttributes:@{NSFontAttributeName:font,
+                             NSForegroundColorAttributeName:[UIColor whiteColor],
+                             NSParagraphStyleAttributeName:paragraphStyle}];
 
 }
+
 
 @end
