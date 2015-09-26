@@ -38,22 +38,40 @@
         }
         self.backgroundColor = [UIColor clearColor];
         
-        [self addObserver:self forKeyPath:@"circle.center" options:(NSKeyValueObservingOptionInitial
+        [self.circle addObserver:self forKeyPath:@"center" options:(NSKeyValueObservingOptionInitial
          | NSKeyValueObservingOptionNew) context:NULL];
-    }
+        [self.circle addObserver:self forKeyPath:@"isLifted" options:(NSKeyValueObservingOptionInitial
+                                                                    | NSKeyValueObservingOptionNew) context:NULL];
+        [self.circle addObserver:self forKeyPath:@"size" options:(NSKeyValueObservingOptionInitial
+                                                                      | NSKeyValueObservingOptionNew) context:NULL];
+
+    
+}
     return self;
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self.circle forKeyPath:@"center"];
+    [self.circle removeObserver:self forKeyPath:@"center"];
+    [self.circle removeObserver:self forKeyPath:@"isLifted"];
+    [self.circle removeObserver:self forKeyPath:@"size"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"circle.center"]) {
+    if ([keyPath isEqualToString:@"center"]) {
         self.center = CGPointMake(self.circle.center.x, 768 - self.circle.center.y) ;
-    } else {
+    } else if ([keyPath isEqualToString:@"isLifted"]){
+        self.alpha = self.circle.isLifted ? 0.5:1.0;
+    }else  if ([keyPath isEqualToString:@"size"]){
+        CGFloat oldSize = self.frame.size.width/2;
+        CGFloat newSize = self.circle.size;
+        CGFloat scale = newSize/oldSize;
+
+        CGAffineTransform transform = CGAffineTransformScale(self.transform, scale, scale);
+        self.frame  = CGRectApplyAffineTransform(self.frame, transform);
+        [self setNeedsDisplay];
+    }else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }

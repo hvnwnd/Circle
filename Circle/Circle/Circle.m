@@ -15,7 +15,7 @@
 + (instancetype)randomCircle
 {
     NSUInteger size = RandomBetween(CircleMinSize, CircleMaxSize);
-    float sizef = 1.0*size;
+
     CGFloat centerX = RandomBetween(size, (1024-size));
     CGFloat centerY = RandomBetween(size, (768-size));
 
@@ -67,9 +67,9 @@
 
 #pragma mark Private
 
-- (Circle *)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated
+- (void)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated
 {
-    return [Circle circleWithCenter:aCircle.center size:aCircle.size+self.size velocity:aCircle.v];
+    self.size += aCircle.size;
 }
 
 

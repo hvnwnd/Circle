@@ -23,7 +23,7 @@
 + (instancetype)randomCircle;
 
 - (float)contactAngleWithCircle:(Circle *)aCircle;
-- (Circle *)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated;
+- (void)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated;
 
 - (BOOL)shouldBounceOffCircle:(Circle *)circle;
 - (void)changeVelocityAfterBumpToCircle:(Circle *)circle;

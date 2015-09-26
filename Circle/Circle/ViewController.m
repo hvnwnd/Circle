@@ -14,6 +14,8 @@
 #import "Canvas.h"
 
 @interface ViewController ()
+@property (nonatomic) UIView *maskView;
+@property (nonatomic) GameController *gameController;
 @end
 
 @implementation ViewController
@@ -21,17 +23,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    GameController *controller = [GameController new];
+    self.gameController = [GameController new];
     Canvas *canvas = (Canvas *) self.view;
-    canvas.controller = controller;
+    canvas.controller = self.gameController;
     // show circles
     
-    for (Circle *circle in controller.circles) {
+    for (Circle *circle in self.gameController.circles) {
         CircleView *circleView = [CircleView randomColorCircleViewWithCircle:circle];
         [self.view addSubview:circleView];
     }
     
-    [controller startGame];
+    [self.gameController startGameWithCompletionHandler:^(BOOL success) {
+        self.maskView.hidden = NO;
+        // animations
+    }];
     
 }
 - (void)didReceiveMemoryWarning {

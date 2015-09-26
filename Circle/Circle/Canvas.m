@@ -28,7 +28,8 @@
         CircleView *circleView = (CircleView *)touch.view;
         if (CGRectContainsPoint(circleView.frame, touchLocation)) {
             circleView.circle.isLifted = YES;
-//            circleView.alpha = 0.5;
+            [self bringSubviewToFront:circleView];
+            [self.controller liftCircle:circleView.circle];
         }
     }
 }
@@ -41,18 +42,33 @@
     if ([[touch.view class] isSubclassOfClass:[CircleView class]]) {
         CircleView *circleView = (CircleView *)touch.view;
         circleView.circle.center = CGPointMake(touchLocation.x, 768-touchLocation.y);
-        [self.controller liftCircle:circleView.circle];
     }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
-    CGPoint touchLocation = [touch locationInView:self];
+//    CGPoint touchLocation = [touch locationInView:self];
     if ([[touch.view class] isSubclassOfClass:[CircleView class]]) {
         CircleView *circleView = (CircleView *)touch.view;
-        circleView.circle.center = CGPointMake(touchLocation.x, 768-touchLocation.y);
-        [self.controller dropCircle:circleView.circle];
+        
+        CircleView *biggerCircleView;
+        for (CircleView *subview in self.subviews) {
+            // find bigger circle
+            if (subview != circleView && CGRectContainsRect(subview.frame, circleView.frame))
+            {
+                biggerCircleView = subview;
+                break;
+            }
+        }
+        
+        if (biggerCircleView){
+            [self.controller dropCircle:circleView.circle inCircle:biggerCircleView.circle];
+            [circleView removeFromSuperview];
+        }else{
+            [self.controller dropCircle:circleView.circle inCircle:nil];
+        }
+
 
 
     }

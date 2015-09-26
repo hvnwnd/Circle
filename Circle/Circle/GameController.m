@@ -75,7 +75,7 @@
     return _randomCircles;
 }
 
-- (void)startGame{
+- (void)startGameWithCompletionHandler:(void (^)(BOOL success))completionHandler{
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
@@ -102,16 +102,34 @@
 }
 
 - (void)liftCircle:(Circle *)circle{
+    circle.isLifted = YES;
     NSMutableSet *set = [self.circles mutableCopy];
     [set removeObject:circle];
     self.circles = set;
 }
 
-- (void)dropCircle:(Circle *)smallCircle {/*inCircle:(Circle *)bigCircle{*/
-//    if (bigCircle == nil){
+- (void)dropCircle:(Circle *)smallCircle inCircle:(Circle *)bigCircle{
+    smallCircle.isLifted = NO;
+    
+    if (bigCircle){
+        // big circle under
+        
+        [bigCircle combineWithCircle:smallCircle animated:YES];
+        if (self.circles.count ==1 )
+        {
+            [self stopGame];
+        }
+    }else{
+        // intersect circle
         NSMutableSet *set = [self.circles mutableCopy];
         [set addObject:smallCircle];
         self.circles = set;
+    }
+
+    
+    
+    // no intersect cirlce
+    
 //    }else{
 //        [bigCircle combineWithCircle:smallCircle animated:YES];
 //    }

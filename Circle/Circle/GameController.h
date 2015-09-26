@@ -12,10 +12,10 @@
 @interface GameController : NSObject
 
 @property (nonatomic) NSSet *circles;
-- (void)startGame;
+- (void)startGameWithCompletionHandler:(void (^)(BOOL success))completionHandler;
 - (void)stopGame;
 
 - (void)liftCircle:(Circle *)circle;
-- (void)dropCircle:(Circle *)smallCircle;
+- (void)dropCircle:(Circle *)smallCircle inCircle:(Circle *)bigCircle;
 @end
 
