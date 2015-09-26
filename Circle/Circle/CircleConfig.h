@@ -12,12 +12,12 @@
 #define CircleCount         5
 
 #define CircleMoveInterval 0.02
-#define CircleMinSize       20
-#define CircleMaxSize       100
+#define CircleMinSize       30
+#define CircleMaxSize       60
 
 // pixel unit
 #define CircleMinVelociy    1
-#define CircleMaxVelociy    5
+#define CircleMaxVelociy    3
 
 #define CanvasFrame CGRectMake(0, 0, 1024, 768)
 
