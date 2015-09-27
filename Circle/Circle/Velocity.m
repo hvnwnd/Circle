@@ -31,12 +31,12 @@
     return sqrtf(_vy*_vy+_vx*_vx);
 }
 
-- (void)moveBottom
+- (void)moveDown
 {
     _vy = -fabsf(_vy);
 }
 
-- (void)moveTop
+- (void)moveUp
 {
     _vy = fabsf(_vy);
 }

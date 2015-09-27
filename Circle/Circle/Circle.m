@@ -79,10 +79,10 @@
         [self.v moveLeft];
     }
     if (self.center.y-self.size <= 0){
-        [self.v moveTop];
+        [self.v moveUp];
     }
     if (self.center.y+self.size >= CanvasHeight){
-        [self.v moveBottom];
+        [self.v moveDown];
     }
 }
 

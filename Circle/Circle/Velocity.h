@@ -16,8 +16,8 @@
 - (instancetype)initWithX:(float)x y:(float)y;
 - (float)angle;
 - (float)scalarVelocity;
-- (void)moveBottom;
-- (void)moveTop;
+- (void)moveDown;
+- (void)moveUp;
 - (void)moveRight;
 - (void)moveLeft;
 
