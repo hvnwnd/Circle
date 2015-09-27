@@ -19,7 +19,6 @@
     CGFloat centerX = RandomBetween(size, ((int16_t)CanvasWidth-size));
     CGFloat centerY = RandomBetween(size, ((int16_t)CanvasHeight-size));
     
-    // Fixme: - velocity
     float vx = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
     float signedVx = vx*(arc4random()%2? 1:-1);
     float vy = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
@@ -141,7 +140,6 @@
 - (void)move
 {
     self.center = CGPointMake(self.center.x+self.v.vx, self.center.y+self.v.vy);
-    
     [self checkVelocity];
 }
 
