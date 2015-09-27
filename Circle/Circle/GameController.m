@@ -29,7 +29,14 @@
 }
 
 - (void)startGame{
+    [self.timer invalidate];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
+}
+
+- (void)stopGame{
+    self.circles = nil;
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 - (void)moveCircles
@@ -48,13 +55,6 @@
     }
 }
 
-- (void)stopGame{
-    self.circles = nil;
-    [self.timer invalidate];
-    self.timer = nil;
-    [self.delegate gameDidStop];
-}
-
 - (void)liftCircle:(Circle *)circle{
     circle.isLifted = YES;
     NSMutableSet *set = [self.circles mutableCopy];
@@ -66,13 +66,10 @@
     smallCircle.isLifted = NO;
     
     if (bigCircle){
-        // big circle under
-        
         [bigCircle combineWithCircle:smallCircle];
         if (self.circles.count == 1)
         {
             bigCircle.isFinal = YES;
-            [self stopGame];
         }
     }else{
         NSMutableSet *set = [self.circles mutableCopy];

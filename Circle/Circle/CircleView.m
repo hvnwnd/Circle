@@ -65,10 +65,13 @@
         CGFloat scale = newSize/oldSize;
         
         CGAffineTransform transform = CGAffineTransformScale(self.transform, scale, scale);
-        //      [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectApplyAffineTransform(self.frame, transform);
-        [self setNeedsDisplay];
-        //        }];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.transform = transform;
+        } completion:^(BOOL finished) {
+            self.frame = CGRectApplyAffineTransform(self.frame, transform);
+            self.transform = CGAffineTransformIdentity;
+            [self setNeedsDisplay];
+        }];
         
     }else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -82,18 +85,34 @@
     
     CGContextFillPath(ctx);
     
-    UIFont *font =[UIFont systemFontOfSize:16.0];
-    CGFloat fontHeight = font.pointSize;
-    CGFloat yOffset = (rect.size.height - fontHeight) / 2.0;
     NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
     paragraphStyle.alignment                = NSTextAlignmentCenter;
-    
-    NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.circle.size];
-    [sizeString drawInRect:
-     CGRectMake(0, yOffset, rect.size.width, fontHeight)
-            withAttributes:@{NSFontAttributeName:font,
-                             NSForegroundColorAttributeName:[UIColor whiteColor],
-                             NSParagraphStyleAttributeName:paragraphStyle}];
+
+    if (self.circle.isFinal){
+        UIFont *font =[UIFont systemFontOfSize:50.0];
+        CGFloat fontHeight = font.pointSize;
+
+        UIImage *bravo = [UIImage imageNamed:@"bravo"];
+        [bravo drawAtPoint:CGPointMake(CGRectGetMidX(rect)-bravo.size.width/2, CGRectGetMidY(rect)-bravo.size.height/2-5.0)];
+        
+        [@"Try Again ?" drawInRect:
+         CGRectMake(0, CGRectGetMidY(rect)+bravo.size.height/2, rect.size.width, fontHeight+10.0)
+                withAttributes:@{NSFontAttributeName:font,
+                                 NSForegroundColorAttributeName:[UIColor whiteColor],
+                                 NSParagraphStyleAttributeName:paragraphStyle}];
+
+    }else{
+        UIFont *font =[UIFont systemFontOfSize:self.circle.size/2.0];
+        CGFloat fontHeight = font.pointSize;
+        CGFloat yOffset = (rect.size.height - fontHeight) / 2.0;
+
+        NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.circle.size];
+        [sizeString drawInRect:
+         CGRectMake(0, yOffset, rect.size.width, fontHeight)
+                withAttributes:@{NSFontAttributeName:font,
+                                 NSForegroundColorAttributeName:[UIColor whiteColor],
+                                 NSParagraphStyleAttributeName:paragraphStyle}];
+    }
     
 }
 
