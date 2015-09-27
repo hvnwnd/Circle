@@ -23,13 +23,12 @@
 -(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v;
 + (instancetype)randomCircle;
 
-- (float)contactAngleWithCircle:(Circle *)aCircle;
-- (void)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated;
-
+#pragma mark - Bouncing
 - (BOOL)shouldBounceOffCircle:(Circle *)circle;
-- (void)changeVelocityAfterBumpToCircle:(Circle *)circle;
+- (void)changeVelocityAfterBounceOffCircle:(Circle *)circle;
 
-- (BOOL)bumpToWall;
+- (void)combineWithCircle:(Circle *)aCircle;
+
 - (void)move;
 
 @end

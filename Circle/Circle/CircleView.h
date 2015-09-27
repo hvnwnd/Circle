@@ -15,8 +15,6 @@
 @property (nonatomic) UIColor *color;
 @property (nonatomic) Circle *circle;
 
-
-- (instancetype)initWithCircle:(Circle *)circle color:(UIColor *)color;
 + (instancetype)randomColorCircleViewWithCircle:(Circle *)circle;
 
 @end

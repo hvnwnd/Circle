@@ -17,7 +17,12 @@
 
 + (instancetype)randomColorCircleViewWithCircle:(Circle *)circle
 {
-    return [[CircleView alloc] initWithCircle:circle color:nil];
+    UIColor *color =    [UIColor colorWithRed:RandomBetween(0,255)/255.0
+                                        green:RandomBetween(0,255)/255.0
+                                         blue:RandomBetween(0,255)/255.0
+                                        alpha:1.0f];
+    
+    return [[CircleView alloc] initWithCircle:circle color:color];
 }
 
 - (instancetype)initWithCircle:(Circle *)circle color:(UIColor *)color
@@ -27,15 +32,7 @@
     if (self)
     {
         _circle = circle;
-        if (color){
-            _color = color;
-        }else{
-            _color =    [UIColor colorWithRed:RandomBetween(0,255)/255.0
-                                        green:RandomBetween(0,255)/255.0
-                                         blue:RandomBetween(0,255)/255.0
-                                        alpha:0.8];
-            
-        }
+        _color = color;
         self.backgroundColor = [UIColor clearColor];
         
         [self.circle addObserver:self forKeyPath:@"center" options:(NSKeyValueObservingOptionInitial
@@ -44,7 +41,6 @@
                                                                       | NSKeyValueObservingOptionNew) context:NULL];
         [self.circle addObserver:self forKeyPath:@"size" options:(NSKeyValueObservingOptionInitial
                                                                   | NSKeyValueObservingOptionNew) context:NULL];
-        
         
     }
     return self;

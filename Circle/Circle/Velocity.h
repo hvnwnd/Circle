@@ -16,9 +16,9 @@
 - (instancetype)initWithX:(float)x y:(float)y;
 - (float)angle;
 - (float)scalarVelocity;
-- (void)bumpToTopWall;
-- (void)bumpToBottomWall;
-- (void)bumpToLeftWall;
-- (void)bumpToRightWall;
+- (void)moveBottom;
+- (void)moveTop;
+- (void)moveRight;
+- (void)moveLeft;
 
 @end

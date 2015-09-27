@@ -53,6 +53,8 @@
     [self removeObserver:self forKeyPath:@"isLifted"];
 }
 
+#pragma mark KVO
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"isLifted"]) {
@@ -65,33 +67,23 @@
 }
 
 
-#pragma mark Private
+#pragma mark - Private
 
-- (void)combineWithCircle:(Circle *)aCircle animated:(BOOL)animated
+- (void)checkVelocity
 {
-    self.size += aCircle.size;
-}
-
-
-- (BOOL)shouldBounceOffCircle:(Circle *)circle{
-    double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
-    BOOL result = (distance <= (self.size+circle.size));
-    
-    return result;
-}
-
-- (void)changeVelocityAfterBumpToCircle:(Circle *)circle{
-    
-    float contactAngle = [self contactAngleWithCircle:circle];
-    float c1vx = [self bouncedVelocityAtXAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
-    float c2vx = [self bouncedVelocityAtXAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
-    float c1vy = [self bouncedVelocityAtYAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
-    float c2vy = [self bouncedVelocityAtYAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
-    
-    self.v.vx = c1vx;
-    self.v.vy = c1vy;
-    circle.v.vx = c2vx;
-    circle.v.vy = c2vy;
+    if ((self.center.x-self.size) <= 0){
+        [self.v moveRight];
+    }
+    if (self.center.x+self.size >= CanvasWidth)
+    {
+        [self.v moveLeft];
+    }
+    if (self.center.y-self.size <= 0){
+        [self.v moveTop];
+    }
+    if (self.center.y+self.size >= CanvasHeight){
+        [self.v moveBottom];
+    }
 }
 
 - (float)contactAngleWithCircle:(Circle *)aCircle
@@ -117,36 +109,40 @@
     +v1.scalarVelocity*sinf(v1.angle-contactAngle)*sinf(contactAngle+M_PI_2);
     
 }
+
+#pragma mark Public
+
+- (void)combineWithCircle:(Circle *)aCircle
+{
+    self.size += aCircle.size;
+}
+
+- (BOOL)shouldBounceOffCircle:(Circle *)circle{
+    double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
+    BOOL result = (distance <= (self.size+circle.size));
+    
+    return result;
+}
+
+- (void)changeVelocityAfterBounceOffCircle:(Circle *)circle{
+    
+    float contactAngle = [self contactAngleWithCircle:circle];
+    float c1vx = [self bouncedVelocityAtXAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
+    float c2vx = [self bouncedVelocityAtXAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
+    float c1vy = [self bouncedVelocityAtYAxisWithM1:self.size m2:circle.size v1:self.v v2:circle.v contactAngle:contactAngle];
+    float c2vy = [self bouncedVelocityAtYAxisWithM1:circle.size m2:self.size v1:circle.v v2:self.v contactAngle:contactAngle];
+    
+    self.v.vx = c1vx;
+    self.v.vy = c1vy;
+    circle.v.vx = c2vx;
+    circle.v.vy = c2vy;
+}
+
 - (void)move
 {
     self.center = CGPointMake(self.center.x+self.v.vx, self.center.y+self.v.vy);
-    if ([self bumpToWall]){
-        if ((self.center.x-self.size) <= 0){
-            [self.v bumpToLeftWall];
-        }
-        if (self.center.x+self.size >= CanvasWidth)
-        {
-            [self.v bumpToRightWall];
-        }
-        if (self.center.y-self.size <= 0){
-            [self.v bumpToBottomWall];
-        }
-        if (self.center.y+self.size >= CanvasHeight){
-            [self.v bumpToTopWall];
-        }
-    }
+    
+    [self checkVelocity];
 }
-
-- (BOOL)bumpToWall
-{
-    return !CGRectContainsRect(CanvasFrame, CGRectMake(self.center.x-self.size, self.center.y-self.size, 2*self.size, 2*self.size));
-}
-
-#pragma mark Description
-
-- (NSString *)description{
-    return [NSString stringWithFormat:@"%p (%0.f %0.f) %f %0.f:%0.f", self, self.center.x, self.center.y, self.size, self.v.vx, self.v.vy];
-}
-
 
 @end

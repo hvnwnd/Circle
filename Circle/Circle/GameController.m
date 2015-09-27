@@ -42,7 +42,7 @@
         
         for (Circle *anotherCircle in otherCircles) {
             if ([circle shouldBounceOffCircle:anotherCircle]){
-                [circle changeVelocityAfterBumpToCircle:anotherCircle];
+                [circle changeVelocityAfterBounceOffCircle:anotherCircle];
             }
         }
     }
@@ -68,28 +68,17 @@
     if (bigCircle){
         // big circle under
         
-        [bigCircle combineWithCircle:smallCircle animated:YES];
+        [bigCircle combineWithCircle:smallCircle];
         if (self.circles.count == 1)
         {
             bigCircle.isFinal = YES;
             [self stopGame];
         }
     }else{
-        // intersect circle
-        
-        // no intersect cirlce
-        
         NSMutableSet *set = [self.circles mutableCopy];
         [set addObject:smallCircle];
         self.circles = set;
     }
-    
-    
-    
-    
-    //    }else{
-    //        [bigCircle combineWithCircle:smallCircle animated:YES];
-    //    }
 }
 
 @end

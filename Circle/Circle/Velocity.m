@@ -31,21 +31,21 @@
     return sqrtf(_vy*_vy+_vx*_vx);
 }
 
-- (void)bumpToTopWall
+- (void)moveBottom
 {
     _vy = -fabsf(_vy);
 }
 
-- (void)bumpToBottomWall
+- (void)moveTop
 {
     _vy = fabsf(_vy);
 }
 
-- (void)bumpToLeftWall
+- (void)moveRight
 {
     _vx = fabsf(_vx);
 }
-- (void)bumpToRightWall
+- (void)moveLeft
 {
     _vx = -fabsf(_vx);
 }
