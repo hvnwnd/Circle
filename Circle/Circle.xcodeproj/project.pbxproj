@@ -90,8 +90,6 @@
 				181216931BB3311700D20B7E /* Info.plist */,
 				181216821BB3311700D20B7E /* Supporting Files */,
 				74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */,
-				18575BF71BB49A9700DF9E75 /* GameController.h */,
-				18575BF81BB49A9700DF9E75 /* GameController.m */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
@@ -131,6 +129,8 @@
 			children = (
 				18C117B61BB841CD00F73C73 /* CirclesProvider.h */,
 				18C117B71BB841CD00F73C73 /* CirclesProvider.m */,
+				18575BF71BB49A9700DF9E75 /* GameController.h */,
+				18575BF81BB49A9700DF9E75 /* GameController.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";

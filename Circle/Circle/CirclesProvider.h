@@ -10,4 +10,7 @@
 
 @interface CirclesProvider : NSObject
 
++ (NSSet *)sampleCircles;
++ (NSSet *)randomCircles;
+
 @end

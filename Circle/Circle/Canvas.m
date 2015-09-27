@@ -10,6 +10,9 @@
 #import "CircleView.h"
 #import "Circle.h"
 #import "GameController.h"
+
+NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
+
 @interface Canvas ()
 
 @property (nonatomic) UIView *draggingView;
@@ -19,7 +22,6 @@
 @implementation Canvas
 
 - (void)prepareForGame{
-    
     for (Circle *circle in self.controller.circles) {
         CircleView *circleView = [CircleView randomColorCircleViewWithCircle:circle];
         [self addSubview:circleView];
@@ -61,8 +63,7 @@
         CircleView *circleView = (CircleView *)touch.view;
         if (circleView.circle.isFinal){
             [circleView removeFromSuperview];
-            [self prepareForGame];
-            [self.controller startGame];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ShouldStartGameNotification object:nil];
         }else{
             CircleView *biggerCircleView;
             for (CircleView *subview in self.subviews) {

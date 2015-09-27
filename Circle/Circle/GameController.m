@@ -13,67 +13,19 @@
 
 @interface GameController ()
 
-@property (nonatomic) NSMutableSet *randomCircles;
-@property (nonatomic) NSSet *sampleCircles;
 @property (nonatomic) NSTimer *timer;
 
 @end
 
 @implementation GameController
 
-- (instancetype)init
+- (instancetype)initWithCircles:(NSSet *)circles
 {
     self = [super init];
     if (self) {
-        self.circles = self.randomCircles;
+        _circles = circles;
     }
     return self;
-}
-
-- (NSSet *)sampleCircles
-{
-    if (!_sampleCircles){
-        Circle *circle1= [[Circle alloc] initWithCenter:CGPointMake(200, 300) size:50 velocity:[[Velocity alloc] initWithX:2 y:0]];
-        Circle *circle2 = [[Circle alloc] initWithCenter:CGPointMake(580, 250) size:80 velocity:[[Velocity alloc] initWithX:-3 y:0]];
-        _sampleCircles = [NSSet setWithObjects:circle1, circle2, nil];
-    }
-    return _sampleCircles;
-}
-
-- (NSSet *)randomCircles
-{
-    if (!_randomCircles)
-    {
-        _randomCircles = [NSMutableSet setWithCapacity:CircleCount];
-        
-        // show circles
-        while (_randomCircles.count < CircleCount){
-            Circle *circle =  [Circle randomCircle];
-            
-            NSSet *firstCircles = [_randomCircles copy];
-            if (_randomCircles.count > 0)
-            {
-                BOOL shouldAddCircle = YES;
-                for (Circle *anEarlierCircle in firstCircles) {
-                    shouldAddCircle = shouldAddCircle && ![circle shouldBounceOffCircle:anEarlierCircle];
-                    if (!shouldAddCircle)
-                    {
-                        continue;
-                    }
-                }
-                
-                if (shouldAddCircle)
-                {
-                    [_randomCircles addObject:circle];
-                }
-            }else{
-                [_randomCircles addObject:circle];
-            }
-            
-        }
-    }
-    
-    return _randomCircles;
 }
 
 - (void)startGame{
@@ -117,9 +69,9 @@
         // big circle under
         
         [bigCircle combineWithCircle:smallCircle animated:YES];
-        bigCircle.isFinal = YES;
         if (self.circles.count == 1)
         {
+            bigCircle.isFinal = YES;
             [self stopGame];
         }
     }else{

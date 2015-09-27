@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const ShouldStartGameNotification;
+
 @class GameController;
 @interface Canvas : UIView
-
 
 @property (nonatomic, weak) GameController *controller;
 - (void)prepareForGame;

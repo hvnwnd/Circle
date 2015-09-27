@@ -19,6 +19,8 @@
 
 @property (nonatomic, weak) id<GameControllerDelegate> delegate;
 @property (nonatomic) NSSet *circles;
+
+- (instancetype)initWithCircles:(NSSet *)circles;
 - (void)startGame;
 - (void)stopGame;
 
