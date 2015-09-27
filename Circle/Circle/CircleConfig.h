@@ -16,7 +16,7 @@
 #define CircleMaxSize       60
 
 // pixel unit
-#define CircleMinVelociy    1
+#define CircleMinVelociy    2
 #define CircleMaxVelociy    3
 
 #define CanvasWidth 1024.0f

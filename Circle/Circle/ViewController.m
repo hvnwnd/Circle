@@ -27,6 +27,11 @@
     [self startGame:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)startGame:(NSNotification *)notificaiton
 {
     self.gameController = [[GameController alloc] initWithCircles:[CirclesProvider randomCircles]];

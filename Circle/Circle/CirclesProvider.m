@@ -28,7 +28,6 @@
 {
     NSMutableSet *randomCircles = [NSMutableSet setWithCapacity:CircleCount];
     
-    // show circles
     while (randomCircles.count < CircleCount){
         Circle *circle =  [Circle randomCircle];
         
