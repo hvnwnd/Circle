@@ -8,11 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol GameControllerDelegate <NSObject>
+
+- (void)gameDidStop;
+
+@end
+
 @class Circle;
 @interface GameController : NSObject
 
+@property (nonatomic, weak) id<GameControllerDelegate> delegate;
 @property (nonatomic) NSSet *circles;
-- (void)startGameWithCompletionHandler:(void (^)(BOOL success))completionHandler;
+- (void)startGame;
 - (void)stopGame;
 
 - (void)liftCircle:(Circle *)circle;

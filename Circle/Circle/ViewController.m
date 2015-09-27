@@ -7,13 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "CircleView.h" 
+#import "CircleView.h"
 #import "Velocity.h"
 #import "CircleConfig.h"
 #import "GameController.h"
 #import "Canvas.h"
 
-@interface ViewController ()
+@interface ViewController () <GameControllerDelegate>
 @property (nonatomic) UIView *maskView;
 @property (nonatomic) GameController *gameController;
 @end
@@ -22,21 +22,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.gameController = [GameController new];
+    self.gameController.delegate = self;
     Canvas *canvas = (Canvas *) self.view;
     canvas.controller = self.gameController;
-    // show circles
     
+    [self startGame];
+}
+
+- (void)gameDidStop
+{
+    Canvas *canvas = (Canvas *) self.view;
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startGame)];
+    
+    CircleView *view = [[canvas subviews] lastObject];
+    [view addGestureRecognizer:tgr];
+    
+}
+- (void)startGame{
     for (Circle *circle in self.gameController.circles) {
         CircleView *circleView = [CircleView randomColorCircleViewWithCircle:circle];
         [self.view addSubview:circleView];
     }
     
-    [self.gameController startGameWithCompletionHandler:^(BOOL success) {
-        self.maskView.hidden = NO;
-        // animations
-    }];
+    [self.gameController startGame];
     
 }
 - (void)didReceiveMemoryWarning {

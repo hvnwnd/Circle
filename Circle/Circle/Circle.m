@@ -15,16 +15,16 @@
 + (instancetype)randomCircle
 {
     NSUInteger size = RandomBetween(CircleMinSize, CircleMaxSize);
-
+    
     CGFloat centerX = RandomBetween(size, (1024-size));
     CGFloat centerY = RandomBetween(size, (768-size));
-
+    
     // Fixme: - velocity
     float vx = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
     float signedVx = vx*(arc4random()%2? 1:-1);
     float vy = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
     float signedVy = vy*(arc4random()%2? 1:-1);
-
+    
     Velocity *v = [[Velocity alloc] initWithX:signedVx y:signedVy];
     return [[Circle alloc] initWithCenter:CGPointMake(centerX, centerY) size:size velocity:v];
 }
@@ -76,7 +76,7 @@
 - (BOOL)shouldBounceOffCircle:(Circle *)circle{
     double distance = sqrt((self.center.x-circle.center.x)*(self.center.x-circle.center.x) + (self.center.y-circle.center.y)*(self.center.y-circle.center.y));
     BOOL result = (distance <= (self.size+circle.size));
-
+    
     return result;
 }
 
@@ -100,12 +100,12 @@
 }
 
 - (float)bouncedVelocityAtXAxisWithM1:(float)m1
-                           m2:(float)m2
-                           v1:(Velocity *)v1
-                           v2:(Velocity *)v2
+                                   m2:(float)m2
+                                   v1:(Velocity *)v1
+                                   v2:(Velocity *)v2
                          contactAngle:(float)contactAngle{
-    return (v1.absoluteVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.absoluteVelocity*cosf(v2.angle-contactAngle))*cosf(contactAngle)/(m1+m2)
-    +v1.absoluteVelocity*sinf(v1.angle-contactAngle)*cosf(contactAngle+M_PI/2);
+    return (v1.scalarVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.scalarVelocity*cosf(v2.angle-contactAngle))*cosf(contactAngle)/(m1+m2)
+    +v1.scalarVelocity*sinf(v1.angle-contactAngle)*cosf(contactAngle+M_PI/2);
 }
 
 - (float)bouncedVelocityAtYAxisWithM1:(float)m1
@@ -113,9 +113,9 @@
                                    v1:(Velocity *)v1
                                    v2:(Velocity *)v2
                          contactAngle:(float)contactAngle{
-    return (v1.absoluteVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.absoluteVelocity*cosf(v2.angle-contactAngle))*sinf(contactAngle)/(m1+m2)
-    +v1.absoluteVelocity*sinf(v1.angle-contactAngle)*sinf(contactAngle+M_PI_2);
-
+    return (v1.scalarVelocity*cosf(v1.angle-contactAngle)*(m1-m2) + 2*m2*v2.scalarVelocity*cosf(v2.angle-contactAngle))*sinf(contactAngle)/(m1+m2)
+    +v1.scalarVelocity*sinf(v1.angle-contactAngle)*sinf(contactAngle+M_PI_2);
+    
 }
 - (void)move
 {

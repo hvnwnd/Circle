@@ -17,8 +17,6 @@
 @property (nonatomic) NSSet *sampleCircles;
 @property (nonatomic) NSTimer *timer;
 
-@property (nonatomic, copy) void (^completionHandler)(BOOL);
-
 @end
 
 @implementation GameController
@@ -47,7 +45,7 @@
     if (!_randomCircles)
     {
         _randomCircles = [NSMutableSet setWithCapacity:CircleCount];
-
+        
         // show circles
         while (_randomCircles.count < CircleCount){
             Circle *circle =  [Circle randomCircle];
@@ -71,23 +69,21 @@
             }else{
                 [_randomCircles addObject:circle];
             }
-
+            
         }
     }
     
     return _randomCircles;
 }
 
-- (void)startGameWithCompletionHandler:(void (^)(BOOL success))completionHandler{
-    self.completionHandler = completionHandler;
+- (void)startGame{
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
 - (void)moveCircles
 {
-    
     NSMutableSet *otherCircles = [self.circles mutableCopy];
-
+    
     for (Circle *circle in self.circles) {
         [circle move];
         [otherCircles removeObject:circle];
@@ -101,8 +97,10 @@
 }
 
 - (void)stopGame{
+    self.circles = nil;
     [self.timer invalidate];
     self.timer = nil;
+    [self.delegate gameDidStop];
 }
 
 - (void)liftCircle:(Circle *)circle{
@@ -119,25 +117,27 @@
         // big circle under
         
         [bigCircle combineWithCircle:smallCircle animated:YES];
-        if (self.circles.count ==1 )
+        bigCircle.isFinal = YES;
+        if (self.circles.count == 1)
         {
             [self stopGame];
-            self.completionHandler(YES);
         }
     }else{
         // intersect circle
+        
+        // no intersect cirlce
+        
         NSMutableSet *set = [self.circles mutableCopy];
         [set addObject:smallCircle];
         self.circles = set;
     }
-
     
     
-    // no intersect cirlce
     
-//    }else{
-//        [bigCircle combineWithCircle:smallCircle animated:YES];
-//    }
+    
+    //    }else{
+    //        [bigCircle combineWithCircle:smallCircle animated:YES];
+    //    }
 }
 
 @end

@@ -13,4 +13,5 @@
 
 
 @property (nonatomic, weak) GameController *controller;
+- (void)prepareForGame;
 @end

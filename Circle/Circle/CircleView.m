@@ -31,22 +31,22 @@
             _color = color;
         }else{
             _color =    [UIColor colorWithRed:RandomBetween(0,255)/255.0
-                                    green:RandomBetween(0,255)/255.0
-                                     blue:RandomBetween(0,255)/255.0
-                                    alpha:0.8];
-
+                                        green:RandomBetween(0,255)/255.0
+                                         blue:RandomBetween(0,255)/255.0
+                                        alpha:0.8];
+            
         }
         self.backgroundColor = [UIColor clearColor];
         
         [self.circle addObserver:self forKeyPath:@"center" options:(NSKeyValueObservingOptionInitial
-         | NSKeyValueObservingOptionNew) context:NULL];
-        [self.circle addObserver:self forKeyPath:@"isLifted" options:(NSKeyValueObservingOptionInitial
                                                                     | NSKeyValueObservingOptionNew) context:NULL];
-        [self.circle addObserver:self forKeyPath:@"size" options:(NSKeyValueObservingOptionInitial
+        [self.circle addObserver:self forKeyPath:@"isLifted" options:(NSKeyValueObservingOptionInitial
                                                                       | NSKeyValueObservingOptionNew) context:NULL];
-
-    
-}
+        [self.circle addObserver:self forKeyPath:@"size" options:(NSKeyValueObservingOptionInitial
+                                                                  | NSKeyValueObservingOptionNew) context:NULL];
+        
+        
+    }
     return self;
 }
 
@@ -67,10 +67,13 @@
         CGFloat oldSize = self.frame.size.width/2;
         CGFloat newSize = self.circle.size;
         CGFloat scale = newSize/oldSize;
-
+        
         CGAffineTransform transform = CGAffineTransformScale(self.transform, scale, scale);
-        self.frame  = CGRectApplyAffineTransform(self.frame, transform);
+        //      [UIView animateWithDuration:0.3 animations:^{
+        self.frame = CGRectApplyAffineTransform(self.frame, transform);
         [self setNeedsDisplay];
+        //        }];
+        
     }else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
@@ -88,14 +91,14 @@
     CGFloat yOffset = (rect.size.height - fontHeight) / 2.0;
     NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
     paragraphStyle.alignment                = NSTextAlignmentCenter;
-
+    
     NSString *sizeString = [NSString stringWithFormat:@"%ld", (unsigned long)self.circle.size];
     [sizeString drawInRect:
      CGRectMake(0, yOffset, rect.size.width, fontHeight)
             withAttributes:@{NSFontAttributeName:font,
                              NSForegroundColorAttributeName:[UIColor whiteColor],
                              NSParagraphStyleAttributeName:paragraphStyle}];
-
+    
 }
 
 

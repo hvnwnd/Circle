@@ -27,7 +27,7 @@
     return atan2f(_vy, _vx);
 }
 
-- (float)absoluteVelocity{
+- (float)scalarVelocity{
     return sqrtf(_vy*_vy+_vx*_vx);
 }
 

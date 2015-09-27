@@ -18,6 +18,7 @@
 @property (nonatomic) CGPoint center;
 
 @property (nonatomic) BOOL isLifted;
+@property (nonatomic) BOOL isFinal;
 
 -(instancetype)initWithCenter:(CGPoint)center size:(float)size velocity:(Velocity *)v;
 + (instancetype)randomCircle;
