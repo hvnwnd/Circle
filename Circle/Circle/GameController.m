@@ -16,6 +16,9 @@
 @property (nonatomic) NSMutableSet *randomCircles;
 @property (nonatomic) NSSet *sampleCircles;
 @property (nonatomic) NSTimer *timer;
+
+@property (nonatomic, copy) void (^completionHandler)(BOOL);
+
 @end
 
 @implementation GameController
@@ -76,6 +79,7 @@
 }
 
 - (void)startGameWithCompletionHandler:(void (^)(BOOL success))completionHandler{
+    self.completionHandler = completionHandler;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:CircleMoveInterval target:self selector:@selector(moveCircles) userInfo:nil repeats:YES];
 }
 
@@ -118,6 +122,7 @@
         if (self.circles.count ==1 )
         {
             [self stopGame];
+            self.completionHandler(YES);
         }
     }else{
         // intersect circle
