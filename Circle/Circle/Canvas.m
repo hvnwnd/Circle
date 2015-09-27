@@ -2,23 +2,19 @@
 //  Canvas.m
 //  Circle
 //
-//  Created by Titi on 9/26/15.
+//  Created by Bin CHEN on 9/26/15.
 //  Copyright © 2015 Fantestech. All rights reserved.
 //
 
 #import "Canvas.h"
+
+#import "CircleConfig.h"
+
 #import "CircleView.h"
 #import "Circle.h"
 #import "GameController.h"
-#import "CircleConfig.h"
 
 NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
-
-@interface Canvas ()
-
-@property (nonatomic) UIView *draggingView;
-
-@end
 
 @implementation Canvas
 
@@ -37,7 +33,6 @@ NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
     if ([[touch.view class] isSubclassOfClass:[CircleView class]]) {
         CircleView *circleView = (CircleView *)touch.view;
         if (!circleView.circle.isFinal && CGRectContainsPoint(circleView.frame, touchLocation)){
-            circleView.circle.isLifted = YES;
             [self bringSubviewToFront:circleView];
             [self.controller liftCircle:circleView.circle];
         }
@@ -66,17 +61,7 @@ NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
             [circleView removeFromSuperview];
             [[NSNotificationCenter defaultCenter] postNotificationName:ShouldStartGameNotification object:nil];
         }else{
-            CircleView *biggerCircleView;
-            for (CircleView *subview in self.subviews) {
-                // find bigger circle
-                if (subview != circleView && circleView.frame.size.width < subview.frame.size.width &&
-                    (CGRectContainsRect(subview.frame, circleView.frame) || CGRectIntersectsRect(subview.frame, circleView.frame)))
-                {
-                    biggerCircleView = subview;
-                    break;
-                }
-            }
-            
+            CircleView *biggerCircleView = [self findBiggerCircleViewThanCircleView:circleView];
             if (biggerCircleView){
                 [self.controller dropCircle:circleView.circle inCircle:biggerCircleView.circle];
                 [circleView removeFromSuperview];
@@ -86,5 +71,19 @@ NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
         }
     }
 }
-
+- (CircleView *)findBiggerCircleViewThanCircleView:(CircleView *)circleView{
+    CircleView *biggerCircleView;
+    for (CircleView *subview in self.subviews) {
+        // find bigger circle
+        if (subview != circleView && circleView.frame.size.width < subview.frame.size.width &&
+            (CGRectContainsRect(subview.frame, circleView.frame) || CGRectIntersectsRect(subview.frame, circleView.frame)))
+        {
+            biggerCircleView = subview;
+            break;
+        }
+    }
+    return biggerCircleView;
+    
+    
+}
 @end

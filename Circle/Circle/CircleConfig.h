@@ -11,13 +11,13 @@
 
 #define CircleCount         5
 
-#define CircleMoveInterval 0.02
+#define CircleMoveInterval 0.03
 #define CircleMinSize       30
 #define CircleMaxSize       60
 
 // pixel unit
 #define CircleMinVelociy    2
-#define CircleMaxVelociy    3
+#define CircleMaxVelociy    4
 
 #define CanvasWidth 1024.0f
 #define CanvasHeight 768.0f

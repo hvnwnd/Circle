@@ -2,7 +2,7 @@
 //  ViewController.m
 //  Circle
 //
-//  Created by Titi on 9/23/15.
+//  Created by Bin CHEN on 9/23/15.
 //  Copyright © 2015 Fantestech. All rights reserved.
 //
 
