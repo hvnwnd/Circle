@@ -77,6 +77,7 @@
 		181216811BB3311700D20B7E /* Circle */ = {
 			isa = PBXGroup;
 			children = (
+				74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */,
 				18C117B51BB841AA00F73C73 /* Manager */,
 				18575BF31BB48F0100DF9E75 /* Model */,
 				18575BF21BB48E9300DF9E75 /* CircleView */,
@@ -89,7 +90,6 @@
 				181216901BB3311700D20B7E /* LaunchScreen.storyboard */,
 				181216931BB3311700D20B7E /* Info.plist */,
 				181216821BB3311700D20B7E /* Supporting Files */,
-				74CFE6DC1BB4026E00ADD570 /* CircleConfig.h */,
 			);
 			path = Circle;
 			sourceTree = "<group>";

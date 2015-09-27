@@ -10,6 +10,7 @@
 #import "CircleView.h"
 #import "Circle.h"
 #import "GameController.h"
+#import "CircleConfig.h"
 
 NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
 
@@ -50,7 +51,7 @@ NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
     
     if ([[touch.view class] isSubclassOfClass:[CircleView class]]) {
         CircleView *circleView = (CircleView *)touch.view;
-        circleView.circle.center = CGPointMake(touchLocation.x, 768-touchLocation.y);
+        circleView.circle.center = CGPointMake(touchLocation.x, CanvasHeight-touchLocation.y);
     }
 }
 
@@ -68,7 +69,8 @@ NSString *const ShouldStartGameNotification = @"ShouldStartGameNotification";
             CircleView *biggerCircleView;
             for (CircleView *subview in self.subviews) {
                 // find bigger circle
-                if (subview != circleView && CGRectContainsRect(subview.frame, circleView.frame))
+                if (subview != circleView && circleView.frame.size.width < subview.frame.size.width &&
+                    (CGRectContainsRect(subview.frame, circleView.frame) || CGRectIntersectsRect(subview.frame, circleView.frame)))
                 {
                     biggerCircleView = subview;
                     break;

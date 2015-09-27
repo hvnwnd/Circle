@@ -19,7 +19,9 @@
 #define CircleMinVelociy    1
 #define CircleMaxVelociy    3
 
-#define CanvasFrame CGRectMake(0, 0, 1024, 768)
+#define CanvasWidth 1024.0f
+#define CanvasHeight 768.0f
+#define CanvasFrame CGRectMake(0, 0, CanvasWidth, CanvasHeight)
 
 #define RandomBetween(from,to) ((int)from + arc4random() % (to-from+1))
 

@@ -16,8 +16,8 @@
 {
     NSUInteger size = RandomBetween(CircleMinSize, CircleMaxSize);
     
-    CGFloat centerX = RandomBetween(size, (1024-size));
-    CGFloat centerY = RandomBetween(size, (768-size));
+    CGFloat centerX = RandomBetween(size, ((int16_t)CanvasWidth-size));
+    CGFloat centerY = RandomBetween(size, ((int16_t)CanvasHeight-size));
     
     // Fixme: - velocity
     float vx = RandomBetween(CircleMinVelociy, CircleMaxVelociy);
@@ -124,14 +124,14 @@
         if ((self.center.x-self.size) <= 0){
             [self.v bumpToLeftWall];
         }
-        if (self.center.x+self.size >= 1024)
+        if (self.center.x+self.size >= CanvasWidth)
         {
             [self.v bumpToRightWall];
         }
         if (self.center.y-self.size <= 0){
             [self.v bumpToBottomWall];
         }
-        if (self.center.y+self.size >= 768){
+        if (self.center.y+self.size >= CanvasHeight){
             [self.v bumpToTopWall];
         }
     }

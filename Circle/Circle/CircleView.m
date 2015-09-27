@@ -60,7 +60,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"center"]) {
-        self.center = CGPointMake(self.circle.center.x, 768 - self.circle.center.y) ;
+        self.center = CGPointMake(self.circle.center.x, CanvasHeight - self.circle.center.y) ;
     } else if ([keyPath isEqualToString:@"isLifted"]){
         self.alpha = self.circle.isLifted ? 0.5:1.0;
     }else  if ([keyPath isEqualToString:@"size"]){
